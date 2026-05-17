@@ -1,7 +1,7 @@
 import React from "react";
 
 const UserCard = ({ user }) => {
-  const { firstName, lastName, age, gender, pictureurl, about } = user;
+  const { firstName, lastName, age, gender, pictureUrl, about } = user;
   if (!user) return <h1>Loading...</h1>;
 
   return (
