@@ -1,9 +1,9 @@
 import React from "react";
 
 const UserCard = ({ user }) => {
-  const { firstName, lastName, age, gender, pictureUrl, about } = user;
+  if (!user) return <h1>Loading profile...</h1>;
 
-  if (!user) return <h1>Loading...</h1>;
+  const { firstName, lastName, age, gender, pictureUrl, about } = user;
 
   return (
     <div className="card bg-base-300 w-96 shadow-xl">
