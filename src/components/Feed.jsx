@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { feedUser } from "../utils/feedSlice";
+import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
 
 const Feed = () => {
@@ -14,7 +14,7 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      dispatch(feedUser(res.data));
+      dispatch(addFeed(res?.data?.data));
     } catch (error) {
       console.error(error);
     }
@@ -23,6 +23,10 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+
+  if (!feed) return;
+
+  if (feed.length <= 0) return <h1 className="flex justify-center font-bold text-2xl">No new profile found</h1>
 
   return (
     feed && (
