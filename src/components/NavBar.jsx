@@ -11,9 +11,18 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
-    dispatch(removeUser());
-    return navigate("/login");
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+
+      dispatch(removeUser());
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const closeDropdown = () => {
+    document.activeElement?.blur();
   };
 
   return (
@@ -23,10 +32,13 @@ const NavBar = () => {
           🧑‍💻 DevTinder
         </Link>
       </div>
+
       {user && (
         <div className="flex-none gap-2">
           <div className="form-control">Welcome, {user.firstName}</div>
-          <div className="dropdown dropdown-end mx-5 flex">
+
+          {/* Removed flex from here */}
+          <div className="dropdown dropdown-end mx-5">
             <div
               tabIndex={0}
               role="button"
@@ -36,6 +48,7 @@ const NavBar = () => {
                 <img alt="user photo" src={user.pictureUrl} />
               </div>
             </div>
+
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
@@ -44,20 +57,34 @@ const NavBar = () => {
                 <Link
                   to="/profile"
                   className="justify-between"
-                  onClick={() => document.activeElement.blur()}
+                  onClick={closeDropdown}
                 >
                   Profile
                   <span className="badge">New</span>
                 </Link>
               </li>
+
               <li>
-                <Link to="/connections">Connections</Link>
+                <Link to="/connections" onClick={closeDropdown}>
+                  Connections
+                </Link>
               </li>
+
               <li>
-                <Link to="/requests">Requests</Link>
+                <Link to="/requests" onClick={closeDropdown}>
+                  Requests
+                </Link>
               </li>
+
               <li>
-                <a onClick={handleLogout}>Logout</a>
+                <button
+                  onClick={() => {
+                    closeDropdown();
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

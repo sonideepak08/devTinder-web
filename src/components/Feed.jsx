@@ -7,7 +7,7 @@ import UserCard from "./UserCard";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const feed = useSelector((state) => state.feed);
+  const feed = useSelector((store) => store.feed);
 
   const getFeed = async () => {
     try {
@@ -26,12 +26,17 @@ const Feed = () => {
 
   if (!feed) return;
 
-  if (feed.length <= 0) return <h1 className="flex justify-center font-bold text-2xl">No new profile found</h1>
+  if (feed.length <= 0)
+    return (
+      <h1 className="flex justify-center font-bold text-2xl">
+        No new profile found
+      </h1>
+    );
 
   return (
     feed && (
       <div className="flex justify-center my-10">
-        <UserCard user={feed?.data?.[0]} />
+        <UserCard user={feed[0]} />
       </div>
     )
   );

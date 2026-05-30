@@ -6,17 +6,24 @@ import { useDispatch } from "react-redux";
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
-  
+
   const { _id, firstName, lastName, age, gender, pictureUrl, about } = user;
   const handleSendRequest = async (status, userId) => {
     try {
-      await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, {withCredentials: true});
+      if (!userId) {
+        console.error("User ID is missing");
+        return;
+      }
+      await axios.post(
+        BASE_URL + "/request/send/" + status + "/" + userId,
+        {},
+        { withCredentials: true },
+      );
       dispatch(removeUserFromFeed(userId));
     } catch (error) {
       console.error(error);
     }
-  }
-
+  };
 
   return (
     <div className="card bg-base-300 w-96 shadow-xl">
@@ -36,8 +43,18 @@ const UserCard = ({ user }) => {
         <p className="min-h-24">{about}</p>
 
         <div className="card-actions justify-center my-4">
-          <button className="btn btn-primary mx-6" onClick={() => handleSendRequest("ignored", _id)}>Ignored</button>
-          <button className="btn btn-secondary" onClick={() => handleSendRequest("interested", _id)}>Interested</button>
+          <button
+            className="btn btn-primary mx-6"
+            onClick={() => handleSendRequest("ignored", _id)}
+          >
+            Ignored
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleSendRequest("interested", _id)}
+          >
+            Interested
+          </button>
         </div>
       </div>
     </div>
