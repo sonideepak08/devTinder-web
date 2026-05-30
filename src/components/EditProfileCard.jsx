@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 
 const EditProfileCard = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [pictureUrl, setPictureUrl] = useState(user.pictureUrl);
-  const [age, setAge] = useState(user.age || '');
-  const [gender, setGender] = useState(user.gender || '');
+  const [age, setAge] = useState(user.age || "");
+  const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about);
   const [error, setError] = useState();
   const [showToast, setShowToast] = useState(false);
