@@ -10,20 +10,24 @@ const Login = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmailId] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoginPage, setIsLoginPage] = useState(false);
+  const [isLoginPage, setIsLoginPage] = useState(true);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
-      const res = await axios.post(BASE_URL + "/signup", {firstName, lastName, email, password}, {withCredentials: true});
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, email, password },
+        { withCredentials: true },
+      );
       dispatch(addUser(res?.data?.data));
       return navigate("/profile");
     } catch (error) {
       setError(error?.response?.data || "Something went wrong!");
     }
-  }
+  };
 
   const handleLogin = async () => {
     try {
@@ -46,34 +50,40 @@ const Login = () => {
     <div className="flex justify-center my-10">
       <div className="card bg-base-300 w-96 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title justify-center">{isLoginPage ? 'Login' : 'Sign Up'}</h2>
+          <h2 className="card-title justify-center">
+            {isLoginPage ? "Login" : "Sign Up"}
+          </h2>
           <div>
-            {!isLoginPage && <><label className="form-control w-full max-w-xs my-2">
-              <div className="label">
-                <span className="label-text">First Name</span>
-              </div>
-              <input
-                type="text"
-                value={firstName}
-                className="input input-bordered w-full max-w-xs"
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
-              />
-            </label>
-            <label className="form-control w-full max-w-xs my-2">
-              <div className="label">
-                <span className="label-text">Last Name</span>
-              </div>
-              <input
-                type="text"
-                value={lastName}
-                className="input input-bordered w-full max-w-xs"
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-              />
-            </label></>}
+            {!isLoginPage && (
+              <>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">First Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={firstName}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Last Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={lastName}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                  />
+                </label>
+              </>
+            )}
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
                 <span className="label-text">Email ID</span>
@@ -103,11 +113,21 @@ const Login = () => {
           </div>
           <p className="bg-red-500">{error}</p>
           <div className="card-actions justify-center m-2">
-            <button className="btn btn-primary" onClick={isLoginPage ? handleLogin : handleSignUp}>
-              {isLoginPage ? 'Login' : 'Sign Up'}
+            <button
+              className="btn btn-primary"
+              onClick={isLoginPage ? handleLogin : handleSignUp}
+            >
+              {isLoginPage ? "Login" : "Sign Up"}
             </button>
           </div>
-          <p className="flex py-4" onClick={() => setIsLoginPage((value) => !value)}>{!isLoginPage ? 'Existing user? Log in here' : 'New user? sign up here'}</p>
+          <p
+            className="flex py-4"
+            onClick={() => setIsLoginPage((value) => !value)}
+          >
+            {!isLoginPage
+              ? "Existing user? Log in here"
+              : "New user? sign up here"}
+          </p>
         </div>
       </div>
     </div>
