@@ -77,6 +77,12 @@ const NavBar = () => {
               </li>
 
               <li>
+                <Link to="/premium" onClick={closeDropdown}>
+                  Premium
+                </Link>
+              </li>
+
+              <li>
                 <button
                   onClick={() => {
                     closeDropdown();
