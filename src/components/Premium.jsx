@@ -49,7 +49,7 @@ const Premium = () => {
           </ul>
           <button
             className="btn btn-primary"
-            onClick={() => handleMembershipEvent("Silver")}
+            onClick={() => handleMembershipEvent("silver")}
           >
             Buy Silver
           </button>
@@ -65,7 +65,7 @@ const Premium = () => {
           </ul>
           <button
             className="btn btn-secondary"
-            onClick={() => handleMembershipEvent("Gold")}
+            onClick={() => handleMembershipEvent("gold")}
           >
             Buy Gold
           </button>
