@@ -11,7 +11,7 @@ const Premium = () => {
         { withCredentials: true },
       );
 
-      const { RAZORPAY_KEY_ID, amount, orderId, notes, email } = resp?.data;
+      const { RAZORPAY_KEY_ID, amount, orderId, notes, email } = resp.data;
 
       const options = {
         key: RAZORPAY_KEY_ID,
