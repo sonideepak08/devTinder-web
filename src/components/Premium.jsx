@@ -1,8 +1,25 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 
 const Premium = () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
+  const verifyPremiumUser = async () => {
+    try {
+      const res = await axios.get(BASE_URL + '/verify/premium', {withCredentials: true});
+      
+      if (res?.data?.isPremium) {
+        setIsUserPremium(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleMembershipEvent = async (type) => {
     try {
       const resp = await axios.post(
@@ -28,6 +45,7 @@ const Premium = () => {
         theme: {
           color: "#F37254",
         },
+        handler: verifyPremiumUser,
       };
 
       const rzp = new window.Razorpay(options);
@@ -37,10 +55,12 @@ const Premium = () => {
     }
   };
   return (
+    isUserPremium ? 
+    <p>You're already a premium user</p> :
     <div className="m-10">
       <div className="flex w-full">
         <div className="card bg-base-300 rounded-box grid h-80 flex-grow place-items-center">
-          <h1 className="font-bold text-3xl">Silver Memebership</h1>
+          <h1 className="font-bold text-3xl">Silver Membership</h1>
           <ul>
             <li> - Chat with 100 people</li>
             <li> - 100 connections per request</li>
@@ -56,7 +76,7 @@ const Premium = () => {
         </div>
         <div className="divider divider-horizontal">OR</div>
         <div className="card bg-base-300 rounded-box grid h-80 flex-grow place-items-center">
-          <h1 className="font-bold text-3xl">Gold Memebership</h1>
+          <h1 className="font-bold text-3xl">Gold Membership</h1>
           <ul>
             <li> - Chat with other people</li>
             <li> - Unlimited connections per request</li>
