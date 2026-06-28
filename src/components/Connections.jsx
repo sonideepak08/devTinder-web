@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addConnection } from '../utils/connectionSlice';
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Connections = () => {
       {connections.map((connection) => {
         const {_id, firstName, lastName, age, gender, pictureUrl, about} = connection;
         return (
-          <div key={_id} className='flex m-4 p-4 bg-base-300 rounded-lg w-1/2 mx-auto'>
+          <div key={_id} className='flex justify-around m-4 p-4 bg-base-300 rounded-lg w-1/2 mx-auto'>
             <div>
               <img className='w-20 h-20 rounded-full' src={pictureUrl} alt="photo" />
             </div>
@@ -40,6 +41,7 @@ const Connections = () => {
               {age && gender && <p>{age + ', ' + gender}</p>}
               <p>{about}</p>
             </div>
+            <Link to={"/chat/" + _id}><button className='btn btn-secondary'>Chat</button></Link>
           </div>
         )
       })}
